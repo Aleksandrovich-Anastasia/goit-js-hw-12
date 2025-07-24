@@ -46,3 +46,11 @@
 .iziToast.custom-toast {
   background-color: #ef4040;
 }
+.end-toast {
+  background-color: #6c8cff !important;
+  font-weight: 500;
+}
+
+.end-toast .info-text {
+  color: #fff !important;
+}

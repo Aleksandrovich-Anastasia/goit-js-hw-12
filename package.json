@@ -1,12 +1,12 @@
 {
-  "name": "goit-js-hw-11",
-  "homepage": "https://Aleksandrovich-Anastasia.github.io/goit-js-hw-11",
+  "name": "goit-js-hw-12",
+  "homepage": "https://Aleksandrovich-Anastasia.github.io/goit-js-hw-12",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/goit-js-hw-11/",
+    "build": "vite build --base=/goit-js-hw-12/",
     "preview": "vite preview"
   },
   "devDependencies": {
@@ -18,7 +18,7 @@
   "author": "Alexander Repeta <alexander.repeta@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.10.0",
+    "axios": "^1.11.0",
     "flatpickr": "^4.6.13",
     "izitoast": "^1.4.0",
     "simplelightbox": "^2.14.3",
