@@ -28,7 +28,7 @@ form.addEventListener('submit', async e => {
   currentPage = 1;
 
   if (!currentQuery) {
-    showToast('Please enter a search query!');
+    showErrorToast('Please enter a search query!');
     return;
   }
 
@@ -40,7 +40,7 @@ form.addEventListener('submit', async e => {
     const data = await getImagesByQuery(currentQuery, currentPage);
 
     if (data.hits.length === 0) {
-      showToast('Sorry, there are no images matching your search query.');
+      showErrorToast('Sorry, there are no images matching your search query.');
       return;
     }
 
@@ -51,11 +51,10 @@ form.addEventListener('submit', async e => {
       showLoadMoreButton();
     } else {
       hideLoadMoreButton();
-      showToast("We're sorry, but you've reached the end of search results.", 'end-toast');
+      showEndToast("We're sorry, but you've reached the end of search results.");
     }
-
   } catch (error) {
-    showToast('An error occurred. Please try again later.');
+    showErrorToast('An error occurred. Please try again later.');
   } finally {
     hideLoader();
   }
@@ -73,33 +72,41 @@ loadMoreBtn.addEventListener('click', async () => {
     const totalPages = Math.ceil(data.totalHits / IMAGES_PER_PAGE);
     if (currentPage >= totalPages) {
       hideLoadMoreButton();
-      showToast("We're sorry, but you've reached the end of search results.", 'end-toast');
+      showEndToast("We're sorry, but you've reached the end of search results.");
     } else {
       showLoadMoreButton();
     }
 
     scrollByGallery();
   } catch (error) {
-    showToast('Failed to load more images.');
+    showErrorToast('Failed to load more images.');
   } finally {
     hideLoader();
   }
 });
 
-function showToast(message, customClass = 'custom-toast') {
-  iziToast.info({
-    class: customClass,
+function showToast(message, iconId, spanClass, toastMethod = 'info', extraClass = '') {
+  iziToast[toastMethod]({
+    class: `custom-toast ${extraClass}`.trim(),
     icon: '',
     message: `
       <svg class="toast-icon" width="24" height="24">
-        <use xlink:href="${spriteUrl}#icon-info"></use>
+        <use xlink:href="${spriteUrl}#${iconId}"></use>
       </svg>
-      <span class="info-text">${message}</span>
+      <span class="${spanClass}">${message}</span>
     `,
     dangerouslyHTML: true,
     position: 'topRight',
     timeout: 3000,
   });
+}
+
+function showErrorToast(message) {
+  showToast(message, 'icon-error', 'error-text', 'error');
+}
+
+function showEndToast(message) {
+  showToast(message, 'icon-info', 'info-text', 'info', 'end-toast');
 }
 
 function scrollByGallery() {
